@@ -3,22 +3,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class DFAtoTMConverter {
+   public class DFAtoTMConverter {
     static class StateTransition {
-        int source;
-        char trigger;
-        int destination;
+    int source;
+     char trigger;
+     int destination;
 
-        StateTransition(int src, char trg, int dest) {
-            this.source = src;
-            this.trigger = trg;
-            this.destination = dest;
+     StateTransition(int src, char trg, int dest) {
+     this.source = src;
+     this.trigger = trg;
+      this.destination = dest;
         }
 
         String getTransition() {
             return "State " + source + " -> State " + destination + " via '" + trigger + "'";
         }
-    }
+         }
+       
 
     static class FiniteAutomaton {
         List<StateTransition> transitions = new ArrayList<>();
@@ -35,52 +36,56 @@ public class DFAtoTMConverter {
         boolean validate(String input) {
             int currentState = 0;
             for (char c : input.toCharArray()) {
-                boolean found = false;
-                for (StateTransition t : transitions) {
-                    if (t.source == currentState && t.trigger == c) {
-                        currentState = t.destination;
-                        found = true;
-                        break;
-                    }
+             boolean found = false;
+           for (StateTransition t : transitions) {
+             if (t.source == currentState && t.trigger == c) {
+             currentState = t.destination;
+              found = true;
+               break;
+                } 
                 }
-                if (!found) return false;
-            }
+             if (!found) return false;  
+                }
             return acceptingStates.contains(currentState);
-        }
-    }
+               }
+               }
+       
 
+       //TM الكلاس المسؤل
     static class TuringMachine {
-        List<TransitionRule> rules = new ArrayList<>();
-        Set<String> finalConfigurations = new HashSet<>();
+      List<TransitionRule> rules = new ArrayList<>();
+     Set<String> finalConfigurations = new HashSet<>();
 
         void addRule(String src, char read, String dest, char write, char move) {
-            rules.add(new TransitionRule(src, read, dest, write, move));
+       rules.add(new TransitionRule(src, read, dest, write, move));
         }
 
         void setFinal(String state) {
-            finalConfigurations.add(state);
+          finalConfigurations.add(state);
         }
-    }
+        }
 
-    static class TransitionRule {
+       
+       //الكلاس المسؤل عن التنقل
+      static class TransitionRule {
         String srcState;
         char inputSymbol;
         String destState;
         char outputSymbol;
         char tapeMove;
-
+        //الكونستراكتور المسؤل عن الانتقالات
         TransitionRule(String src, char read, String dest, char write, char move) {
             this.srcState = src;
             this.inputSymbol = read;
             this.destState = dest;
             this.outputSymbol = write;
             this.tapeMove = move;
-        }
+            }
 
         String getRule() {
-            return srcState + ":" + inputSymbol + "→" + destState + "[" + outputSymbol + "," + tapeMove + "]";
+         return srcState + ":" + inputSymbol + "→" + destState + "[" + outputSymbol + "," + tapeMove + "]";
         }
-    }
+        }
 
    
     static FiniteAutomaton createAutomaton(String pattern) {
@@ -114,6 +119,7 @@ public class DFAtoTMConverter {
         return fa;
     }
 
+       
     static TuringMachine convertToTM(FiniteAutomaton fa) {
         TuringMachine tm = new TuringMachine();
 
@@ -129,5 +135,5 @@ public class DFAtoTMConverter {
 
         return tm;
 
-    }
-}
+       }
+       }
