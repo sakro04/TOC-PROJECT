@@ -1,12 +1,11 @@
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
+
+    public class Main {
+        
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        Scanner inputScanner = new Scanner(System.in);
+        
+     Scanner inputScanner = new Scanner(System.in);      
 
         System.out.println("Available patterns:");
         System.out.println("1. a|b");
@@ -17,18 +16,21 @@ public class Main {
         System.out.print("Select pattern (1-5): ");
 
         int choice = inputScanner.nextInt();
+        
         String selectedPattern = "";
 
-        switch(choice) {
+           switch(choice) {
+                   
             case 1: selectedPattern = "a|b"; break;
             case 2: selectedPattern = "a*b"; break;
             case 3: selectedPattern = "ab+"; break;
             case 4: selectedPattern = "0+"; break;
             case 5: selectedPattern = "01*"; break;
             default:
-                System.out.println("Invalid choice");
+    System.out.println("Invalid choice");     
                 inputScanner.close();
                 return;
+                   
         }
 
         DFAtoTMConverter.FiniteAutomaton fa = DFAtoTMConverter.createAutomaton(selectedPattern);
@@ -38,7 +40,8 @@ public class Main {
             System.out.println(t.getTransition());
         }
 
-        System.out.println("Accepting States: " + fa.acceptingStates);
+      System.out.println("Accepting States: " + fa.acceptingStates);   
+        
 
         DFAtoTMConverter.TuringMachine tm = DFAtoTMConverter.convertToTM(fa);
 
@@ -53,5 +56,5 @@ public class Main {
         System.out.println(fa.validate(testString) ? "Accepted" : "Rejected");
 
         inputScanner.close();
-    }
-}
+       }
+       }
